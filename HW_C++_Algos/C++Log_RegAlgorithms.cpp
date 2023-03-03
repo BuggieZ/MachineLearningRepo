@@ -21,7 +21,8 @@ int main( int argc, char ** argv)
     vector <double> trainSexV (MAX_LEN);
     vector <double> trainSurV (MAX_LEN);
 
-
+    vector<vector<double>> m;
+    vector<vector<double>> m2;
 
     cout<<"Openning file titanic_project.csv. "<<endl;
 
@@ -60,14 +61,15 @@ int main( int argc, char ** argv)
         // take the rest of the observations in as testV
        if ( (numObservations >= 800) && (numObservations < 1046)&& i <246 )
         {
-          testsexV.at(i) = stof(sex_in); 
-        testsurV.at(i) = stof(sex_in);
+          testSexV.at(i) = stof(sex_in); 
+          testSurV.at(i) = stof(sex_in);
           i++;
         }
 
 
            numObservations++;
 
+        
         if(numObservations ==1046)
         {
             break;
@@ -75,11 +77,11 @@ int main( int argc, char ** argv)
     }
 
 
-    trainV.resize(800);
-    testV.resize(246);
-    cout<< "size for train and test are: " <<endl;
-    cout<<trainV.size()<<endl;
-   cout<<testV.size()<<endl;
+    trainSexV.resize(800);
+    trainSurV.resize(800);
+    testSexV.resize(246);
+    testSurV.resize(246);
+    
 
 
 
