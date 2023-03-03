@@ -21,7 +21,7 @@ int main( int argc, char ** argv)
     vector <double> trainSexV (MAX_LEN);
     vector <double> trainSurV (MAX_LEN);
 
-    vector<vector<double>> m;
+    vector<vector<double>> m1;
     vector<vector<double>> m2;
 
     cout<<"Openning file titanic_project.csv. "<<endl;
@@ -54,7 +54,7 @@ int main( int argc, char ** argv)
       //Take the first 800 to be in test vector
       if ( numObservations < 800)
         {
-            trainSurV.at(numObservations) = stof(sex_in);
+            trainSurV.at(numObservations) = stof(survived_in);
             trainSexV.at(numObservations) = stof(sex_in);
         }
 
@@ -69,7 +69,7 @@ int main( int argc, char ** argv)
 
            numObservations++;
 
-        
+
         if(numObservations ==1046)
         {
             break;
@@ -83,8 +83,34 @@ int main( int argc, char ** argv)
     testSurV.resize(246);
     
 
+// Push to matrices
+// create temp vectors, w0
+vector < double> temp1;
 
 
+for ( int i = 0; i< 800; i++)
+{
+    temp1.push_back(1);
+}
+m1.push_back(temp1);
+m1.push_back(trainSexV);
+m2.push_back(temp1);
+m2.push_back(trainSurV);
+
+
+for ( int j = 0; j< 2;j++){
+    for ( int i = 700; i< trainSexV.size(); i++)
+    {
+        cout<<m1[j][i]<<endl;
+    }
+}
+ cout<<" m2 " <<endl;
+ for ( int j = 700; j< 2; j++) {
+    for ( int i = 0; i< trainSexV.size(); i++)
+    {
+        cout<<m2[j][i]<<endl;
+    }
+ }
 
     cout<<"Closing file Boston.csv. "<<endl;
 
