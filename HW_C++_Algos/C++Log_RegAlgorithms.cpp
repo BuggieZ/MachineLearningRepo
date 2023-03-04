@@ -7,33 +7,12 @@ using namespace std;
 
 
 
-vector <double> probability;
-vector <double> weight = {1.0, 1.0};
-double e = 2.711828;
-double w0, w1, err = 0;
 
 
 double sigmoid ( double z, double e){
-    return 1.0/ (1+ pow(e, (-1*z)));
+return 1/(1 + pow(e, (-1 * z)));
 }
 
-void training ( vector <vector <double>> m, vector <double> weight)
-{
-    double i;
-    i = 0;
-    // tcalculating probability vectors
-     while ( i < 50000){
-        for ( int i = 0; i < 800; i++)
-        {
-            i = m[i][0]*weight[0]+m[i][1]*weight[1];
-            probability.push_back(sigmoid (i, e));
-        }
-
-     }
-     
-    for ( int i = 0; i < 800; i++)
-    { cout<<probability[i]<<endl};
-}
 
 int main( int argc, char ** argv)
 {
@@ -43,7 +22,7 @@ int main( int argc, char ** argv)
     string line;
     string id_in, pclass_in,survived_in,sex_in, age_in;
     const int MAX_LEN= 2000;
-
+  
     vector <double> testSexV (MAX_LEN);
      vector <double> testSurV (MAX_LEN);
     vector <double> trainSexV (MAX_LEN);
@@ -51,6 +30,14 @@ int main( int argc, char ** argv)
 
     vector<vector<double>> m1;
     vector<vector<double>> m2;
+
+
+    
+    vector <double> weight;
+    weight.push_back(1);
+    weight.push_back(1);
+    double e = 2.711828;
+    double w0, w1, err = 0;
 
     cout<<"Openning file titanic_project.csv. "<<endl;
 
@@ -66,7 +53,6 @@ int main( int argc, char ** argv)
 
     cout<<"heading: "<<line<<endl;
     int numObservations= 0;
-    int i = 0;
 
     while(inFS.good()) { 
 
@@ -87,6 +73,7 @@ int main( int argc, char ** argv)
         }
 
         // take the rest of the observations in as testV
+          int i = 0;
        if ( (numObservations >= 800) && (numObservations < 1046)&& i <246 )
         {
           testSexV.at(i) = stof(sex_in); 
@@ -115,10 +102,10 @@ int main( int argc, char ** argv)
 // create temp vectors, w0
 vector < double> temp1;
 
-
+int j= 1.0;
 for ( int i = 0; i< 800; i++)
 {
-    temp1.push_back(1);
+    temp1.push_back(j);
 }
 m1.push_back(temp1);
 m1.push_back(trainSexV);
@@ -140,8 +127,27 @@ for ( int j = 0; j< 2;j++){
         cout<<m2[j][i]<<endl;
     }
  }
+
 */
 
+/***************************training***************3*/
+
+    vector <double> probability;
+    double time;
+    time= 0;
+    // tcalculating probability vectors
+     while ( time < 5000){
+     for ( int j = 0; j < 800; j++)
+        {   int i;
+            i = m1[j][0]*weight[0]+m1[j][1]*weight[1];
+            probability.push_back(sigmoid (i, e));
+        }
+        time++;
+
+     }
+      
+    for ( int i = 0; i < 800; i++)
+    { cout<<probability[i]<<endl;}
 
 
     cout<<"Closing file Boston.csv. "<<endl;
