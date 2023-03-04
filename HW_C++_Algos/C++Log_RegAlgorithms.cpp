@@ -5,6 +5,7 @@
 #include<math.h>
 #include  <bits/stdc++.h>
 #include <cmath>
+#include <chrono>
 using namespace std;
 
 
@@ -176,9 +177,9 @@ while ( time < 50) {
     //cout<<weight[0]<<weight[1]<<endl;
     for ( int j = 0; j< 800; j++){
        
-            weight[0] = (weight[0] + (learningRate * (m1[0][j]*err[j] ))); 
+            weight[0] = (weight[0] + (0.0001* (m1[0][j]*err[j] ))); 
 
-            weight[1] = (weight[1]+ (learningRate * (m1[1][j]*err[j])));
+            weight[1] = (weight[1]+ (0.0001* (m1[1][j]*err[j])));
            //cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
     }
 
@@ -194,7 +195,7 @@ while ( time < 50) {
     for ( int i = 0; i< 246; i++)
     {
         predicted.push_back ( m2[0][i]*weight[0] + m2[1][i] * weight[1]);
-        //cout<<"predicted is "<<predicted[i]<<endl;
+        cout<<"predicted is "<<predicted[i]<<endl;
 
     }
 
@@ -214,6 +215,20 @@ while ( time < 50) {
         sumMean++;
       }
     } 
+
+   
+double TP= 0; double TN= 0; 
+for (int i = 0; i < 246; i++)
+{   if (predicted[i] > 0.5)
+   { 
+       TP++;
+    }
+     TN++;
+}
+ double accuracy = TP/0.645;
+ double sensitivity = TN/0.355;
+
+cout<< "Accurary is "<< accuracy;
 
 
     
