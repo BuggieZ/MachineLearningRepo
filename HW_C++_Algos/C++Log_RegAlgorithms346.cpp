@@ -144,7 +144,7 @@ for ( int j = 0; j< 2;j++){
     double i;
     double e =  2.71828182845904523536;
     // calculating probability vectors
-while ( time < 50) {
+while ( time < 500) {
      for ( int j = 0; j < 800; j++)
         {   
        // cout<<m1[j][0]<<" "<<m1[j][1]<<endl;break;
@@ -173,19 +173,19 @@ while ( time < 50) {
     } */
 
     /***********updates weights using error and transpose matrix************/
-    //cout<<weight[0]<<weight[1]<<endl;
+    cout<<weight[0]<<weight[1]<<endl;
     for ( int j = 0; j< 800; j++){
        
             weight[0] = (weight[0] + (learningRate * (m1[0][j]*err[j] ))); 
 
             weight[1] = (weight[1]+ (learningRate * (m1[1][j]*err[j])));
-           //cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
+          //  cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
     }
 
      time++;
 }  // End of while loop
     // FInal Weight after iteration:
-    cout<<" weight is "<<weight[0]<<" " << weight[1]<<endl; 
+    cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
 
 
 
@@ -203,23 +203,6 @@ while ( time < 50) {
     {
         probabilityTest.push_back ( pow(e, predicted[i])/(1+pow(e, predicted[i])) );
     }
-
-    
-    
-    
-    double  sumMean;
-    for (int i = 0; i < 246; i++){
-      if ( predicted[i] == m2[1][i])
-      {
-        sumMean++;
-      }
-    } 
-
-
-    
-
-    cout<< " Mean is: "<<sumMean<<endl;
-
 
 
     
