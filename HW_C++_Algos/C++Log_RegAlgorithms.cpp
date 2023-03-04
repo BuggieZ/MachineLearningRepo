@@ -7,6 +7,34 @@ using namespace std;
 
 
 
+vector <double> probability;
+vector <double> weight = {1.0, 1.0};
+double e = 2.711828;
+double w0, w1, err = 0;
+
+
+double sigmoid ( double z, double e){
+    return 1.0/ (1+ pow(e, (-1*z)));
+}
+
+void training ( vector <vector <double>> m, vector <double> weight)
+{
+    double i;
+    i = 0;
+    // tcalculating probability vectors
+     while ( i < 50000){
+        for ( int i = 0; i < 800; i++)
+        {
+            i = m[i][0]*weight[0]+m[i][1]*weight[1];
+            probability.push_back(sigmoid (i, e));
+        }
+
+     }
+     
+    for ( int i = 0; i < 800; i++)
+    { cout<<probability[i]<<endl};
+}
+
 int main( int argc, char ** argv)
 {
 
@@ -97,7 +125,8 @@ m1.push_back(trainSexV);
 m2.push_back(temp1);
 m2.push_back(trainSurV);
 
-
+/***************testing for matrices m1 m2***************/
+/*
 for ( int j = 0; j< 2;j++){
     for ( int i = 700; i< trainSexV.size(); i++)
     {
@@ -111,6 +140,9 @@ for ( int j = 0; j< 2;j++){
         cout<<m2[j][i]<<endl;
     }
  }
+*/
+
+
 
     cout<<"Closing file Boston.csv. "<<endl;
 
@@ -123,3 +155,4 @@ for ( int j = 0; j< 2;j++){
 
     return 0;
 }
+
