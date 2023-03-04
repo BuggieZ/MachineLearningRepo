@@ -2,7 +2,9 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include <math.h>
+
+//#include  <bits/stdc++.h>
+#include <cmath>
 using namespace std;
 
 
@@ -10,7 +12,8 @@ using namespace std;
 
 
 double sigmoid ( double z, double e){
-return 1/(1 + pow(e, (-1 * z)));
+    z = -1*z;
+    return 1/(1 + (pow(e, z)));
 }
 
 
@@ -39,7 +42,7 @@ int main( int argc, char ** argv)
 
     weight.push_back(1);
     weight.push_back(1);
-    double e = 2.711828;
+    
     double learningRate = 0.0001;
 
     cout<<"Openning file titanic_project.csv. "<<endl;
@@ -138,10 +141,12 @@ for ( int j = 0; j< 2;j++){
     vector <double> probability;
     double time;
     time= 0;
+    double i;
+    double e =  2.71828;
     // calculating probability vectors
-     while ( time < 50000){
+while ( time < 500){
      for ( int j = 0; j < 800; j++)
-        {   double i;
+        {   
        // cout<<m1[j][0]<<" "<<m1[j][1]<<endl;break;
         //cout<<m1[j][0]*weight[0]<<endl; break;
      //  cout<< m1[0][j]<<endl;
@@ -149,31 +154,32 @@ for ( int j = 0; j< 2;j++){
     //cout<<weight[1]<<endl;
     //   cout<<weight[0]<<endl;
             i = m1[0][j]*weight[0]+m1[1][j]*weight[1];
-            probability.push_back(sigmoid (i, e));
+            probability.push_back(sigmoid (i,e));
         }
         time++;
-    break;
-     }
       
     for ( int  k= 0; k < 800; k++)
     { cout<< "Prob at k: "<<k<<"is "<< probability[k]<<endl;}
 
 
-/****************Get error vector *************/
-for ( int i = 0; i < 800; i++)
-{
-    err.push_back(trainSurV[i]-probability[i]);
+    /****************Get error vector *************/
+    for ( int i = 0; i < 800; i++)
+    {
+        err.push_back(trainSurV[i]-probability[i]);
+    }
+    for ( int i = 0; i < 800; i++)
+    {
+        cout<<err[i]<<endl;
+    }
+    /***********updates weights using error and transpose matrix************/
+    for ( int j = 0; j< 800; j++){
+
+            weight[0] = (weight[0] + learningRate * m1[0][j]*err[j]); 
+            weight[1] = (weight[1]+ learningRate * m1[1][j]*err[j]);
+            cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
+    }
+
 }
-
-/***********updates weights using error and transpose matrix************/
-for ( int i = 0; i < 800; i++){
-
-        weight[0] = (weight[0] + learningRate * m1[0][j]*err[j]);
-        weight [1] = (weight[1]+ learningRate * m1[1][j]*err[j]);
-        cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
-}
-
-
     
     cout<<"Closing file Boston.csv. "<<endl;
 
