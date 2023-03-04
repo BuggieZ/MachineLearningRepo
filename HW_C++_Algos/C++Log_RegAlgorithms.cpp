@@ -34,10 +34,13 @@ int main( int argc, char ** argv)
 
     
     vector <double> weight;
+    vector <double> err;
+   
+
     weight.push_back(1);
     weight.push_back(1);
     double e = 2.711828;
-    double w0, w1, err = 0;
+    double learningRate = 0.0001;
 
     cout<<"Openning file titanic_project.csv. "<<endl;
 
@@ -135,21 +138,43 @@ for ( int j = 0; j< 2;j++){
     vector <double> probability;
     double time;
     time= 0;
-    // tcalculating probability vectors
-     while ( time < 5000){
+    // calculating probability vectors
+     while ( time < 50000){
      for ( int j = 0; j < 800; j++)
-        {   int i;
-            i = m1[j][0]*weight[0]+m1[j][1]*weight[1];
+        {   double i;
+       // cout<<m1[j][0]<<" "<<m1[j][1]<<endl;break;
+        //cout<<m1[j][0]*weight[0]<<endl; break;
+     //  cout<< m1[0][j]<<endl;
+       //cout<< m1[1][j]<<endl;
+    //cout<<weight[1]<<endl;
+    //   cout<<weight[0]<<endl;
+            i = m1[0][j]*weight[0]+m1[1][j]*weight[1];
             probability.push_back(sigmoid (i, e));
         }
         time++;
-
+    break;
      }
       
-    for ( int i = 0; i < 800; i++)
-    { cout<<probability[i]<<endl;}
+    for ( int  k= 0; k < 800; k++)
+    { cout<< "Prob at k: "<<k<<"is "<< probability[k]<<endl;}
 
 
+/****************Get error vector *************/
+for ( int i = 0; i < 800; i++)
+{
+    err.push_back(trainSurV[i]-probability[i]);
+}
+
+/***********updates weights using error and transpose matrix************/
+for ( int i = 0; i < 800; i++){
+
+        weight[0] = (weight[0] + learningRate * m1[0][j]*err[j]);
+        weight [1] = (weight[1]+ learningRate * m1[1][j]*err[j]);
+        cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
+}
+
+
+    
     cout<<"Closing file Boston.csv. "<<endl;
 
 
