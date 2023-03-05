@@ -20,7 +20,7 @@ double sigmoid ( double z, double e){
 
 int main( int argc, char ** argv)
 {
-
+    auto start = std::chrono::high_resolution_clock::now();
 
     ifstream inFS;
     string line;
@@ -145,7 +145,7 @@ for ( int j = 0; j< 2;j++){
     double i;
     double e =  2.71828182845904523536;
     // calculating probability vectors
-while ( time < 50) {
+while ( time < 50000) {
      for ( int j = 0; j < 800; j++)
         {   
        // cout<<m1[j][0]<<" "<<m1[j][1]<<endl;break;
@@ -175,13 +175,16 @@ while ( time < 50) {
 
     /***********updates weights using error and transpose matrix************/
     //cout<<weight[0]<<weight[1]<<endl;
+    double sum1 ,sum2;
     for ( int j = 0; j< 800; j++){
        
-            weight[0] = (weight[0] + (0.0001* (m1[0][j]*err[j] ))); 
-
-            weight[1] = (weight[1]+ (0.0001* (m1[1][j]*err[j])));
+           sum1= m1[0][j]*err[j];
+            sum2=m1[1][j]*err[j];
+            
            //cout<<" weight now is "<<weight[0]<<" " << weight[1]<<endl;
     }
+    weight[0] = weight[0] + (0.0001* sum1);
+    weight[1] = weight[1]+ (0.0001* sum2);
 
      time++;
 }  // End of while loop
@@ -195,7 +198,7 @@ while ( time < 50) {
     for ( int i = 0; i< 246; i++)
     {
         predicted.push_back ( m2[0][i]*weight[0] + m2[1][i] * weight[1]);
-        cout<<"predicted is "<<predicted[i]<<endl;
+        //cout<<"predicted is "<<predicted[i]<<endl;
 
     }
 
@@ -226,17 +229,15 @@ for (int i = 0; i < 246; i++)
      TN++;
 }
  double accuracy = TP/0.645;
- double sensitivity = TN/0.355;
 
 cout<< "Accurary is "<< accuracy;
-
 
     
 
     cout<< " Mean is: "<<sumMean<<endl;
 
 
-
+auto end = std::chrono::high_resolution_clock::now();
     
     cout<<"Closing file titanic_project.csv. "<<endl;
 
@@ -245,7 +246,7 @@ cout<< "Accurary is "<< accuracy;
 
     cout<<"\nProgram terminaed.";
 
-
+printf("Time: %f\n", std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000000.0);
 
     return 0;
 
