@@ -1,0 +1,127 @@
+---
+title: "Dimensonality reduction"
+Name: "Jiarui Groves"
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+
+Ran command install.packages("ggplot2")
+install.packages("lattice")
+install.packages("caret")
+```{r}
+
+library(ggplot2)
+library(lattice)
+library(caret)
+library(tidyverse)
+```
+
+- Data exploration
+- Converted EMISSIONS into factor
+- Since we are prediction emissions based on other variable
+ I had converted emissions with a cutoff point 250 , greater than 200 to be 1, otherwise to be 0
+ also converted engine size ad factor for logistic regression
+```{r}
+
+fuelData<- read.csv("Fuel_Consumption_2000-2022.csv")
+str(fuelData)
+summary((fuelData$YEAR))
+fuelData$MAKE <- as.factor(fuelData$MAKE)
+fuelData$EMISSIONS <- as.factor (ifelse (fuelData$EMISSIONS>250,1,0))
+#fuelData$ENGINE.SIZE <- as.factor(fuelData$ENGINE.SIZE)
+#fuelData$CYLINDERS<-as.factor(fuelData$CYLINDERS)
+fuelData$EMISSIONS
+
+
+
+
+```
+- Count NA 
+- We have 22556 observations with 13 variables
+- Train 18000, test is the test 4556
+
+```{r}
+colSums(is.na(fuelData))
+```
+```{r}
+i <- sample(1:22566, 18000, replace = FALSE) 
+train <-fuelData[i,]
+test<-fuelData[-i,]
+set.seed(1234)
+pca_out <-preProcess(train[, c(5,6,10,11)], method = c("center","scale","pca") )
+pca_out
+
+```
+- PCA suggested only 2 components as Variables
+- Now plot the PCA
+- build GLM using logistic regression and pca components 
+```{r}
+train_pc <- predict(pca_out, train[, c(5,6,10,11)])
+test_pc <- predict(pca_out, test[,])
+plot(test_pc$PC1, test_pc$PC2, pch=c(23,21,22)[unclass(test_pc$EMISSIONS)],bg=c("red","green","blue")[unclass(test_pc$EMISSIONS)])
+
+train_df <- data.frame(train_pc$PC1, train_pc$PC2, train$EMISSIONS)
+test_df <- data.frame(test_pc$PC1, test_pc$PC2, test$EMISSIONS)
+library(class)
+set.seed(1234)
+
+glm1 = glm(EMISSIONS~train_pc$PC1+train_pc$PC2, data = train, family = binomial)
+probs <- predict(glm1, newdata = test , type = "response")
+pred<-ifelse(probs> 0.5, 1,0)
+acc1<- mean(pred == as.integer(test$EMISSIONS))
+summary(glm1)
+print(paste("glm1 has accuracy = ",acc1))
+                                                                                                                         
+```
+- Try logistic regression on the non-reduced data
+- set ground truth 
+```{r}
+
+library(class)
+set.seed(1234)
+glm2 = glm(EMISSIONS~ HWY..L.100.km.+COMB..L.100.km.+ENGINE.SIZE+CYLINDERS, data = train, family = binomial)
+probs <- predict(glm2, newdata = test , type = "response")
+pred<-ifelse(probs> 0.5, 1,0)
+acc2<- mean(pred == as.integer(test$EMISSIONS))
+summary(glm2)
+print(paste("glm2 has accuracy = ",acc2))
+
+table(pred, as.integer(test$EMISSIONS))
+```
+
+
+Accuracy from model is around 2%
+Confusion matrix shows the distribution of prediction where correct and incorrect being around 0.50 margin.
+
+
+
+
+LDA
+
+```{r}
+
+library(MASS)
+lda1<-lda(EMISSIONS~ HWY..L.100.km.+COMB..L.100.km.+ENGINE.SIZE+CYLINDERS,data =train)
+lda1$means
+
+
+
+```
+Above data shows a clear positive relativity between EMISSION and the rest of the predictors
+0 classified vehicles with emission less than 250, and 1 is more than 250
+```{r}
+lda_pred<- predict(lda1, newdata = test,type = "class")
+lda_pred$class
+```
+Summary:  Predicted result shows an accuracy around 89% on the unreduced data.
+The LCA has not has as high as an accuracy rate comparing to PDA.
+where it was 95% accuracy using two predictors.
+Logistic regression wasn't able to predict anything practicaly using the reduced data
+
+```{r}
+mean(lda_pred$class == test$EMISSIONS)
+```
+
