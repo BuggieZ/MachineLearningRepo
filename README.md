@@ -13,3 +13,6 @@ Homework RnoteBook on
 Linear regression: https://github.com/BuggieZ/MachineLearningRepo/blob/main/HW_linear%26LogisticRegression/HW-LinearRegression.pdfhttps://github.com/BuggieZ/
 ClassificationL: https://github.com/BuggieZ/MachineLearningRepo/blob/main/HW_linear%26LogisticRegression/HW-LinearRegression.pdf
 Analysis:https://github.com/BuggieZ/MachineLearningRepo/blob/main/HW_linear%26LogisticRegression/Linear%26Logistic_Reg.docx
+
+Click here for pdfs related to Portfolio Component: Searching for Similarity
+https://github.com/BuggieZ/MachineLearningRepo/tree/main/DimensionalityReduction
