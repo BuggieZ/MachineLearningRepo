@@ -16,3 +16,6 @@ Analysis:https://github.com/BuggieZ/MachineLearningRepo/blob/main/HW_linear%26Lo
 
 Click here for pdfs related to Portfolio Component: Searching for Similarity
 https://github.com/BuggieZ/MachineLearningRepo/tree/main/DimensionalityReduction
+
+Click here for notebook on SKlearn using Python
+https://github.com/BuggieZ/MachineLearningRepo/tree/main/HW_skLearn
