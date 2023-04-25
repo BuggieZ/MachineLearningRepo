@@ -19,3 +19,6 @@ https://github.com/BuggieZ/MachineLearningRepo/tree/main/DimensionalityReduction
 
 Click here for notebook on SKlearn using Python
 https://github.com/BuggieZ/MachineLearningRepo/tree/main/HW_skLearn
+
+CLick this link for ImageClassification notebook
+https://github.com/BuggieZ/MachineLearningRepo/tree/main/HW_ImageClassification
