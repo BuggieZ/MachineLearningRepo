@@ -9,7 +9,7 @@ This notebook is a subjective understanding and brief summary of ML.
 
 
 *Homework on Data exploration* 
-https://github.com/BuggieZ/MachineLearningRepo/blob/85220be6cae4a19a923649c7d0957169a5bd4c60/hw_dataExplooration.docx
+[https://github.com/BuggieZ/MachineLearningRepo/blob/85220be6cae4a19a923649c7d0957169a5bd4c60/hw_dataExplooration.docx](https://github.com/BuggieZ/MachineLearningRepo/tree/main/HW_C%2B%2B_Algos)
 In this notebook. I used C++ to read in a simple Exel data - a statistics of Boston housing prices in relation of the room number and median home value.  
 Learned the basic attribute of data such as range, mean, covariance, and correlation between input variables.
 
